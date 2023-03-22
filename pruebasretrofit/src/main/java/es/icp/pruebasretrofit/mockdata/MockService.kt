@@ -18,6 +18,4 @@ interface MockService {
         @Url url: String
     ) : GenericResponse<List<MockModel>>
 
-
-
 }

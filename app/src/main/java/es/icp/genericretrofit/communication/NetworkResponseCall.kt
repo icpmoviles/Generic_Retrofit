@@ -28,40 +28,44 @@ internal class NetworkResponseCall<S: Any, E: Any> (
                 val body = response.body()
                 val code = response.code()
                 val error = response.errorBody()
-                Log.w("$TAG CALL", response.toString())
-                Log.w("$TAG BODY", mGson.toJson(body))
+                Log.w("$TAG RESPONSE", "$response\n" +
+                        "DATA BODY:\n${mGson.toJson(body)}")
 
+                val message = response.headers()["message"]
+                val visibleMessage = response.headers()["visible_message"]
+                val logMessage = response.headers()["log_message"]
 
                 if (response.isSuccessful){
                     when (code) {
-                         in OK..ACCEPTED -> {
+                         in OK..ACCEPTED ->
                              body?.let {
                                      callback.onResponse(
                                      this@NetworkResponseCall,
                                      Response.success(NetworkResponse.Success(it))
                                  )
                             }
-                        }
-                        NOT_CONTENT -> {
+
+                        NOT_CONTENT ->
                             callback.onResponse(
                                 this@NetworkResponseCall,
                                 Response.success(NetworkResponse.UnknownError(Error("El recurso solicitado no ha devuelto contenido.")))
                             )
-                        }
 
-                        else -> callback.onResponse(
-                            this@NetworkResponseCall,
-                            Response.success(NetworkResponse.HttpError(code, response.headers()["message"] ?: response.message() ))
-                        )
 
+                        else ->
+                            callback.onResponse(
+                                this@NetworkResponseCall,
+                                Response.success(NetworkResponse.HttpError(code, message ?: visibleMessage ?:logMessage ?: "Error desconocido"))
+                            )
                     }
                 } else {
                     callback.onResponse(
                         this@NetworkResponseCall,
-                        Response.success(NetworkResponse.HttpError(code,  response.headers()["message"] ?: response.message()))
+                        Response.success(NetworkResponse.HttpError(code,  message ?: visibleMessage ?:logMessage ?: "Error desconocido"))
                     )
-                }
 
+                }
+                logMessage?.let { Log.w("$TAG LOG MESSAGE", it) }
             }
 
             override fun onFailure(call: Call<S>, throwable: Throwable) {

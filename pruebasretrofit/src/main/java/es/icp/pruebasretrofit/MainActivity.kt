@@ -51,33 +51,7 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-        val client = OkHttpClient.Builder().apply {
-            interceptors().add(ConnectivityInterceptor(this@MainActivity))
-            readTimeout(1, TimeUnit.MINUTES)
-            writeTimeout(1, TimeUnit.MINUTES)
-            connectTimeout(1, TimeUnit.MINUTES)
-        }.build()
 
-        val retrofit = RetrofitBase.getInstance(
-            baseUrl = "https://63b54fad0f49ecf508a0abcb.mockapi.io/mock/",
-            client = client
-        )
-        val service = retrofit.create<MockService>()
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val request = MockModel("5550", Date(), "2")
-            service.postData(url = "prueba", mockreques = request)
-                .onSuccess {
-                    Log.w("main onSucces", it.toString())
-                }
-                .onError { code, message ->
-                    Log.w("main on error", "code: $code, mensaje: $message")
-                }
-                .onException { e: Throwable ->
-                    Log.w("main on Execption", e.message?:"Error desconocido")
-
-                }
-        }
 
     }
 

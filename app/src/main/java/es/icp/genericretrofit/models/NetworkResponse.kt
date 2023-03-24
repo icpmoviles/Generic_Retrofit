@@ -1,12 +1,13 @@
 package es.icp.genericretrofit.models
 
+import okhttp3.Headers
 import java.io.IOException
 
 sealed class NetworkResponse <out T: Any, out U: Any> {
     /**
      * Respuesta ok con body
      */
-    data class Success<T : Any>(val body: T) : NetworkResponse<T, Nothing>()
+    data class Success<T : Any>(val body: T, val headers: Headers) : NetworkResponse<T, Nothing>()
     /**
      * Respuesta fallido con mensaje
      */

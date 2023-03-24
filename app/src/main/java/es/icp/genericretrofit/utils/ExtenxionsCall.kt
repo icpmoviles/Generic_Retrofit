@@ -1,6 +1,7 @@
 package es.icp.genericretrofit.utils
 
 import es.icp.genericretrofit.models.NetworkResponse
+import okhttp3.Headers
 
 const val TAG = "RETROFIT"
 typealias GenericResponse<S> = NetworkResponse<S, Error>
@@ -10,6 +11,13 @@ suspend fun <T : Any> NetworkResponse<T, Error>.onSuccess(
 ): NetworkResponse<T, Error> = apply {
     if (this is NetworkResponse.Success)
         executable(body)
+}
+
+suspend fun <T : Any> NetworkResponse<T, Error>.onSuccessWithHeaders(
+    executable: suspend (T, Headers) -> Unit
+): NetworkResponse<T, Error> = apply {
+    if (this is NetworkResponse.Success)
+        executable(body, headers)
 }
 
 

@@ -64,7 +64,20 @@ class FirstFragment : Fragment() {
         binding.buttonFirst.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 val request = MockModel("5550", Date(), "2")
-//                service.postData(url = "prueba", mockreques = request)
+                service.postData(url = "prueba", mockreques = request)
+                    .onSuccess { body, headers ->
+                        Log.w("main onSucces", it.toString())
+
+                    }
+                    .onError { code, message ->
+                        Log.w("main on error", "code: $code, mensaje: $message")
+                    }
+                    .onException { e: Throwable ->
+                        Log.w("main on Execption", e.message ?: "Error desconocido")
+
+                    }
+
+//                service.getData(url = "prueba")
 //                    .onSuccess {
 //                        Log.w("main onSucces", it.toString())
 //                    }
@@ -75,18 +88,6 @@ class FirstFragment : Fragment() {
 //                        Log.w("main on Execption", e.message ?: "Error desconocido")
 //
 //                    }
-
-                service.getData(url = "prueba")
-                    .onSuccess {
-                        Log.w("main onSucces", it.toString())
-                    }
-                    .onError { code, message ->
-                        Log.w("main on error", "code: $code, mensaje: $message")
-                    }
-                    .onException { e: Throwable ->
-                        Log.w("main on Execption", e.message ?: "Error desconocido")
-
-                    }
             }
 
 

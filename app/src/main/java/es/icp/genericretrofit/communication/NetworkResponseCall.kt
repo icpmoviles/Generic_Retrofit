@@ -34,6 +34,7 @@ internal class NetworkResponseCall<S: Any, E: Any> (
                 val message = response.headers()["message"]
                 val visibleMessage = response.headers()["visible_message"]
                 val logMessage = response.headers()["log_message"]
+val a = response.headers()
 
                 if (response.isSuccessful){
                     when (code) {
@@ -41,7 +42,7 @@ internal class NetworkResponseCall<S: Any, E: Any> (
                              body?.let {
                                      callback.onResponse(
                                      this@NetworkResponseCall,
-                                     Response.success(NetworkResponse.Success(it))
+                                     Response.success(NetworkResponse.Success(it, a))
                                  )
                             }
 

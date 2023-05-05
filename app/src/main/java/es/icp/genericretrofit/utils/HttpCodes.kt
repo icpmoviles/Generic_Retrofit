@@ -23,5 +23,6 @@ object HttpCodes {
 
     const val ERROR_NO_INTERNET = -1
     const val ERROR_IO_EXCEPTION = -2
+    const val ERROR_204_NOT_CONTENT = -3
 
 }

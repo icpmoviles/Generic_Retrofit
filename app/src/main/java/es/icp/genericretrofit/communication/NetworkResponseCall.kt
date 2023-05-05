@@ -46,6 +46,13 @@ internal class NetworkResponseCall<S: Any, E: Any> (
                                  )
                             }
 
+                        NOT_CONTENT ->
+                            callback.onResponse(
+                                this@NetworkResponseCall,
+                                Response.success(NetworkResponse.HttpError(HttpCodes.ERROR_204_NOT_CONTENT, "El recurso solicitado no ha devuelto contenido."))
+                            )
+
+
                         else ->
                             callback.onResponse(
                                 this@NetworkResponseCall,

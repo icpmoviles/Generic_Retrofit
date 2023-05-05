@@ -34,24 +34,17 @@ internal class NetworkResponseCall<S: Any, E: Any> (
                 val message = response.headers()["message"]
                 val visibleMessage = response.headers()["visible_message"]
                 val logMessage = response.headers()["log_message"]
-val a = response.headers()
+                val a = response.headers()
 
                 if (response.isSuccessful){
                     when (code) {
-                         in OK..ACCEPTED ->
+                         in OK..NOT_CONTENT ->
                              body?.let {
                                      callback.onResponse(
                                      this@NetworkResponseCall,
                                      Response.success(NetworkResponse.Success(it, a))
                                  )
                             }
-
-                        NOT_CONTENT ->
-                            callback.onResponse(
-                                this@NetworkResponseCall,
-                                Response.success(NetworkResponse.UnknownError(Error("El recurso solicitado no ha devuelto contenido.")))
-                            )
-
 
                         else ->
                             callback.onResponse(

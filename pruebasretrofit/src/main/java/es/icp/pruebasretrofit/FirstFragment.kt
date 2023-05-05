@@ -11,6 +11,7 @@ import es.icp.genericretrofit.communication.RetrofitBase
 import es.icp.genericretrofit.utils.onError
 import es.icp.genericretrofit.utils.onException
 import es.icp.genericretrofit.utils.onSuccess
+import es.icp.genericretrofit.utils.onSuccessWithHeaders
 import es.icp.pruebasretrofit.databinding.FragmentFirstBinding
 import es.icp.pruebasretrofit.mockdata.MockModel
 import es.icp.pruebasretrofit.mockdata.MockService
@@ -65,7 +66,7 @@ class FirstFragment : Fragment() {
             CoroutineScope(Dispatchers.IO).launch {
                 val request = MockModel("5550", Date(), "2")
                 service.postData(url = "prueba", mockreques = request)
-                    .onSuccess { body, headers ->
+                    .onSuccessWithHeaders { body, headers ->
                         Log.w("main onSucces", it.toString())
 
                     }

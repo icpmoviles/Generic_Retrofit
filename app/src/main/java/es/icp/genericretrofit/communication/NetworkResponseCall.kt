@@ -38,7 +38,7 @@ internal class NetworkResponseCall<S: Any, E: Any> (
 
                 if (response.isSuccessful){
                     when (code) {
-                         in OK..NOT_CONTENT ->
+                         in OK..ACCEPTED ->
                              body?.let {
                                      callback.onResponse(
                                      this@NetworkResponseCall,

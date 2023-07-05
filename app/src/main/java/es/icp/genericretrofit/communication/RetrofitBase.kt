@@ -9,7 +9,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitBase {
 
     var retrofit: Retrofit? = null
-    val mGson: Gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").setPrettyPrinting().create()
+    val mGson: Gson =
+        GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+            .serializeNulls()
+            .setPrettyPrinting()
+            .create()
     fun getInstance(
         baseUrl: String,
         client: OkHttpClient? = null,

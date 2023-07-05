@@ -11,6 +11,7 @@ import es.icp.genericretrofit.communication.RetrofitBase
 import es.icp.genericretrofit.utils.onError
 import es.icp.genericretrofit.utils.onException
 import es.icp.genericretrofit.utils.onSuccess
+import es.icp.genericretrofit.utils.onSuccessWithHeaders
 import es.icp.pruebasretrofit.databinding.FragmentFirstBinding
 import es.icp.pruebasretrofit.mockdata.MockModel
 import es.icp.pruebasretrofit.mockdata.MockService
@@ -64,7 +65,20 @@ class FirstFragment : Fragment() {
         binding.buttonFirst.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 val request = MockModel("5550", Date(), "2")
-//                service.postData(url = "prueba", mockreques = request)
+                service.postData(url = "prueba", mockreques = request)
+                    .onSuccessWithHeaders { body, headers ->
+                        Log.w("main onSucces", it.toString())
+
+                    }
+                    .onError { code, message ->
+                        Log.w("main on error", "code: $code, mensaje: $message")
+                    }
+                    .onException { e: Throwable ->
+                        Log.w("main on Execption", e.message ?: "Error desconocido")
+
+                    }
+
+//                service.getData(url = "prueba")
 //                    .onSuccess {
 //                        Log.w("main onSucces", it.toString())
 //                    }
@@ -75,18 +89,6 @@ class FirstFragment : Fragment() {
 //                        Log.w("main on Execption", e.message ?: "Error desconocido")
 //
 //                    }
-
-                service.getData(url = "prueba")
-                    .onSuccess {
-                        Log.w("main onSucces", it.toString())
-                    }
-                    .onError { code, message ->
-                        Log.w("main on error", "code: $code, mensaje: $message")
-                    }
-                    .onException { e: Throwable ->
-                        Log.w("main on Execption", e.message ?: "Error desconocido")
-
-                    }
             }
 
 

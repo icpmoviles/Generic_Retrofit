@@ -56,13 +56,13 @@ internal class NetworkResponseCall<S: Any, E: Any> (
                         else ->
                             callback.onResponse(
                                 this@NetworkResponseCall,
-                                Response.success(NetworkResponse.HttpError(code, message ?: visibleMessage ?:logMessage ?: "Error desconocido"))
+                                Response.success(NetworkResponse.HttpError(code, message ?: visibleMessage ?:logMessage ?: "Se ha producido un error de comunicación con el servidor. Por favor, inténtalo de nuevo más tarde"))
                             )
                     }
                 } else {
                     callback.onResponse(
                         this@NetworkResponseCall,
-                        Response.success(NetworkResponse.HttpError(code,  message ?: visibleMessage ?:logMessage ?: "Error desconocido"))
+                        Response.success(NetworkResponse.HttpError(code,  message ?: visibleMessage ?:logMessage ?: "Se ha producido un error de comunicación con el servidor. Por favor, inténtalo de nuevo más tarde"))
                     )
 
                 }

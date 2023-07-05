@@ -5,5 +5,5 @@ import java.io.IOException
 class NoInternetException : IOException() {
 
     override val message: String
-        get() = "No dispones de conexión a internet."
+        get() = "Parece que no hay conexión a internet disponible en este momento. Por favor, revisa tu conexión y vuelve a intentarlo más tarde."
 }
